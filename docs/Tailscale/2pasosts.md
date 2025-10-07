@@ -1,43 +1,59 @@
-# Instalación y configuración de Tailscale
+# Instalación y Configuración de Tailscale
 
-Para utilizar **Tailscale**, es necesario seguir los siguientes pasos:
+Para comenzar a utilizar **Tailscale**, sigue los pasos descritos a continuación:
 
-1. **Crear una cuenta institucional en Tailscale**, la cual servirá como punto central para conectar y administrar las cuentas de los usuarios.  
-2. **Instalar la aplicación de Tailscale** en los dispositivos que formarán parte de la red, ya sean **Android**, **Windows**, **macOS** o **Linux**. 
-Si se desea instalar Tailscale en un servidor, se hace mediante la siguiente línea de comandos:
+---
 
+## 1. Crear una cuenta institucional
+Crea una **cuenta institucional en Tailscale**, que servirá como punto central para conectar, autenticar y administrar los dispositivos y usuarios dentro de la red privada (**Tailnet**).
+
+---
+
+## 2. Instalar Tailscale en los dispositivos
+Instala la aplicación de **Tailscale** en los equipos que formarán parte de la red: **Windows**, **macOS**, **Linux**, **Android** o **iOS**.
+
+### Instalación en un servidor Linux
+Ejecuta el siguiente comando para instalar Tailscale:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
 ```
- curl -fsSL https://tailscale.com/install.sh | sh 
- ```
+Una vez instalado, inicia sesión con la cuenta institucional:
+```bash
+sudo tailscale login
+```
+El sistema generará una URL de autenticación, la cual deberás abrir en un navegador para registrar el servidor dentro de la Tailnet.
 
-3. Configurar el servidor como **Exit Node**
-    - Encender Tailscale
+---
 
-    ```
-    sudo tailscale up
-    ```
+## 3. Configurar el servidor como Exit Node
 
-    - Comprobar que el cliente este conectado a Tailscale confirmar que el equipo remoto está en la tailnet y tiene IP Tailscale.
+Un Exit Node permite que otros dispositivos enruten todo su tráfico de Internet a través del servidor, actuando como una puerta de salida segura.
 
-    ```
-    tailscale status
-    ```
+### Pasos de configuración:
 
-    - Apagar tailscale
+- Iniciar Tailscale:
+```bash
+sudo tailscale up
+```
+- Verificar el estado de conexión:
+Comprueba que el cliente esté conectado a la Tailnet y tenga asignada una IP de Tailscale.
+```bash
+tailscale status
+```
+- Detener Tailscale (opcional):
+```bash
+tailscale down
+```
+- Habilitar Subnet Router:
+Permite que los usuarios remotos accedan a la red interna del servidor.
+```bash
+sudo tailscale up --advertise-routes=10.0.2.0/24
+```
+- Activar como Exit Node:
+Permite que todo el tráfico de Internet de otros dispositivos pase a través del servidor.
+```bash
+sudo tailscale up --advertise-exit-node
+```
 
-    ```
-    tailscale down
-    ```
-
-    - Activar como Subnet Router permitirá que los usuarios remotos accedan a la red interna
-
-    ```
-    tailscale up --advertise-routes=10.0.2.0/24
-    ```
-
-    - Activar el modo exit node Permite que todo el tráfico de Internet de otros dispositivos pase a través de este servidor, no solo el tráfico de red interna.
-
-    ```
-    tailscale up--advertise-exit-node
-    ```
-    
+Con estos pasos, el servidor quedará integrado a la red de Tailscale y podrá actuar como nodo de salida o router de subred, según las necesidades.

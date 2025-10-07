@@ -1,40 +1,51 @@
 ---
 sidebar_position: 1
 ---
-# ¿Qué es?
-## Funcionamiento de Tailscale
-**Tailscale** es un servicio que crea una Red Privada Virtual (VPN) de malla (mesh) basada en la tecnología WireGuard, pero que simplifica drásticamente la configuración y gestión de la red. Convierte todos tus dispositivos en nodos que pueden comunicarse de forma segura, estén donde estén.
+# ¿Qué es Tailscale?
+
+## Funcionamiento General
+**Tailscale** es un servicio que crea una **VPN de malla (mesh)** basada en **WireGuard**, simplificando su configuración y gestión. Convierte todos tus dispositivos en **nodos** capaces de comunicarse de forma segura, sin importar su ubicación.
+
+---
+
 ## Nodos y la Tailnet
-**Nodos:** En Tailscale, cada dispositivo (ordenador, móvil, servidor, etc.) con el cliente de Tailscale instalado y autenticado se considera un nodo.
-**Tailnet:** El conjunto de todos estos nodos conectados de forma segura bajo la cuenta de Tailscale se denomina **Tailnet**. Dentro de la Tailnet, cada nodo recibe una dirección IP privada y fija de Tailscale, lo que les permite comunicarse entre sí de forma directa y cifrada.
-**Estructura de Malla (Mesh):** A diferencia de las VPN tradicionales de "Hub & Spoke" (donde todo el tráfico pasa por un servidor central), Tailscale busca establecer conexiones punto a punto (peer-to-peer) entre los nodos. Esto significa que la comunicación entre, por ejemplo, un móvil y un servidor de casa, viaja directamente entre ellos, no a través de un servidor intermedio, lo que mejora la velocidad y la latencia.
-## El Servidor de Coordinación (Control Server)
-El componente central que gestiona la red es el Servidor de Coordinación de Tailscale (a menudo llamado Control Server). Su función es: 
+- **Nodos:** Cada dispositivo con el cliente de Tailscale instalado y autenticado.  
+- **Tailnet:** Conjunto de nodos conectados bajo una misma cuenta, cada uno con una IP privada fija.  
+- **Estructura Mesh:** En lugar de un servidor central (como en las VPN tradicionales), los nodos se conectan **punto a punto (peer-to-peer)** para mejorar velocidad y privacidad.
 
-- **Gestión de Identidad y Claves:** Se encarga de la autenticación de los usuarios (a través de un proveedor de identidad, como Google) y de la gestión automática de las claves criptográficas de WireGuard para cada nodo. Esto elimina la tediosa configuración manual de claves.
+---
 
-- **Intercambio de Metadatos:** Le dice a cada nodo qué otros nodos están en la red, cuáles son sus direcciones IP asignadas y cómo pueden contactarse (información de túneles).
+## Servidor de Coordinación (Control Server)
+El **Control Server** administra la red, pero **no transmite los datos cifrados**, solo la información de control.
 
-- **La Clave:** Los Datos NO Pasan por el Servidor de Coordinación
-Es fundamental entender que el Servidor de Coordinación solo maneja metadatos de control, NO el tráfico de datos cifrado que viaja entre los nodos.
-Una vez que un nodo sabe cómo contactar a otro (gracias a la información del Servidor de Coordinación), intenta establecer una conexión directa y cifrada (WireGuard) con ese nodo.
-Si la conexión directa falla (a menudo por firewalls estrictos o NAT complejos), Tailscale utiliza su red de retransmisión llamada DERP (Designated Encrypted Relay for Packets) para que el tráfico pueda llegar. Incluso cuando se utiliza DERP, el tráfico sigue estando cifrado de extremo a extremo entre los nodos, por lo que el servidor DERP solo retransmite datos cifrados sin poder leer su contenido.
+### Funciones principales:
+- **Gestión de identidad y claves:** Autenticación mediante proveedores (ej. Google) y manejo automático de claves WireGuard.  
+- **Intercambio de metadatos:** Informa a cada nodo sobre los demás nodos, direcciones IP y rutas disponibles.  
+- **Conexiones directas:** Una vez obtenida la información, los nodos intentan conectarse directamente usando WireGuard.
 
-- **No Abre Puertos**
-Tailscale utiliza una técnica conocida como NAT Traversal (o agujereado de firewall/NAT) para establecer las conexiones punto a punto sin requerir que abras puertos en tu router.
-Los nodos de Tailscale envían paquetes a través de la red intentando "descubrir" cómo llegar al otro lado del NAT o firewall. Esto se hace de forma automática y es crucial para el funcionamiento de WireGuard y Tailscale.
-Dado que el tráfico se inicia desde dentro de la red (por el nodo), el firewall o router generalmente permite que la respuesta regrese, estableciendo la conexión sin necesidad de configuración manual de puertos.
+---
 
-- **Nodo de Salida (Exit Node)**
-El Nodo de Salida o Exit Node es una característica clave para el uso de Tailscale como una VPN  para acceso remoto a Internet.
-Función: Te permite dirigir todo tu tráfico de Internet público (no solo el tráfico interno de la Tailnet) a través de uno de los nodos de tu Tailnet.
-Acceso Remoto a Internet: Al activar un nodo como "Nodo de Salida", puedes usarlo como tu punto de conexión a Internet, estés donde estés. Esto es útil para:
-Ocultar tu IP real al navegar (la IP que verán los sitios web será la del Nodo de Salida).
-Acceder a servicios con restricción geográfica desde la ubicación del Nodo de Salida.
+## DERP (Designated Encrypted Relay for Packets)
+Si una conexión directa falla (por NAT o firewalls), Tailscale usa su red **DERP** para retransmitir los datos **sin descifrar** el contenido.  
+Los paquetes permanecen **cifrados de extremo a extremo**.
 
-- **Mecanismo:** Cuando configuras tu dispositivo para usar un Nodo de Salida, Tailscale actualiza la ruta predeterminada del dispositivo. En lugar de enviar el tráfico de Internet a un router local (la ruta predeterminada), lo envía a través del túnel cifrado de WireGuard hacia el Nodo de Salida seleccionado. El Nodo de Salida se encarga de enviarlo a Internet.
- 
+---
 
+## NAT Traversal (Agujereado de NAT)
+Tailscale **no requiere abrir puertos** en el router.  
+Emplea técnicas automáticas para que los nodos se descubran y establezcan conexiones seguras, iniciando el tráfico desde dentro de la red.
 
+---
 
+## Nodo de Salida (Exit Node)
+Permite usar un nodo como **punto de acceso a Internet**, redirigiendo todo el tráfico público por él.
+
+### Beneficios:
+- **Privacidad:** Oculta tu IP real.  
+- **Acceso remoto:** Permite navegar como si estuvieras en la ubicación del nodo (útil para restricciones geográficas).
+
+### Funcionamiento:
+Al activar un Nodo de Salida, Tailscale cambia la **ruta predeterminada** del dispositivo, enviando todo el tráfico de Internet a través del túnel cifrado hacia el nodo seleccionado, que luego lo reenvía a Internet.
+
+---
 
