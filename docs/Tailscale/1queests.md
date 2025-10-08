@@ -48,4 +48,18 @@ Permite usar un nodo como **punto de acceso a Internet**, redirigiendo todo el t
 Al activar un Nodo de Salida, Tailscale cambia la **ruta predeterminada** del dispositivo, enviando todo el tráfico de Internet a través del túnel cifrado hacia el nodo seleccionado, que luego lo reenvía a Internet.
 
 ---
+### Diagrama Funcionamiento Tailscale
 
+![Diagrama Tailscale](/img/DiagramaTailscale.png)
+
+🔁 Flujo general
+
+- Cada nodo se autentica con el Control Plane.
+
+- El Control Plane les dice cómo llegar uno al otro (direcciones, claves, etc.).
+
+- Los nodos se conectan directamente P2P (sin abrir puertos).
+
+- Si no pueden, usan un DERP Relay.
+
+- Si hay un Exit Node, los demás pueden enrutar su tráfico por él.

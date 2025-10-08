@@ -25,7 +25,7 @@ Validar el funcionamiento de **Tailscale** como herramienta de interconexión se
 |--------------|------------------|--------------------------|
 | Servidor Principal | Ubuntu Server 22.04 | Servidor DNS y aplicación interna |
 | Equipo Cliente 1 | Windows 10 Pro | Nodo de administración remota |
-| Equipo Cliente 2 | Debian 12 | Nodo de monitoreo y pruebas |
+| Equipo Cliente 2 | xiaomi | Nodo de monitoreo y pruebas |
 
 ### Requisitos previos
 
@@ -63,14 +63,20 @@ Cada equipo se autenticó usando la misma cuenta de Tailscale, quedando registra
 
 El panel de administración mostró correctamente los dispositivos conectados con direcciones del rango 100.x.x.x asignadas por Tailscale.
 
-Ejemplo:
+![Equipos conectados a Tailscale](/img/Captura2.PNG)
 
-Salidas:
+
 
 ### 4. Activación de Exit Node
 
 Uno de los dispositivos (el Servidor Principal) se configuró como Exit Node, lo cual permite enrutar el tráfico de otros equipos a través de él:
 
 En el servidor principal:
+```bash
+sudo tailscale up --advertise-routes=100.0.2.0/24
+``` 
+Salida servidor monitoreo:
+
+![Servidor Exit Node](/img/Servidor-exit-node.PNG)
 
 
