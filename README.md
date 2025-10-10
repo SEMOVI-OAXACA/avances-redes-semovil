@@ -7,6 +7,6 @@ This website is built using [Docusaurus](https://docusaurus.io/), a modern stati
 
 ```bash
 npm run build
-npm start build
+npm run start
 ```
 
