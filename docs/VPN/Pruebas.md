@@ -4,20 +4,20 @@ title: Prueba de Conectividad con Tailscale
 sidebar_label: Prueba de Tailscale
 ---
 
-# 🧪 Prueba de Conectividad con Tailscale
+# Prueba de Conectividad con Tailscale
 
 En esta sección se documenta la **prueba realizada con Tailscale** para verificar la conectividad segura entre diferentes nodos dentro de la red de SEMOVI.  
 El objetivo fue comprobar la capacidad de **Tailscale** para establecer una red privada virtual (VPN) sin la necesidad de abrir puertos, simplificando la comunicación entre servidores y equipos remotos.
 
 ---
 
-## 🎯 Objetivo General
+## Objetivo General
 
 Validar el funcionamiento de **Tailscale** como herramienta de interconexión segura entre servidores y estaciones de trabajo distribuidas en distintas ubicaciones, sin requerir configuraciones de firewall complejas.
 
 ---
 
-## ⚙️ Configuración Inicial
+## Configuración Inicial
 
 ### Equipos utilizados
 
@@ -37,7 +37,7 @@ Validar el funcionamiento de **Tailscale** como herramienta de interconexión se
 
 ---
 
-## 🧩 Procedimiento de la Prueba
+## Procedimiento de la Prueba
 
 ### 1. Instalación de Tailscale
 
