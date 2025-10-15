@@ -37,6 +37,22 @@ Aquí se pueden ajustar algunas configuraciones:
 - **ip_prefixes:** Puedes dejar los valores predeterminados.
 - **dns_config:** Configura servidores DNS para tus clientes.
 - **log_level:** Puedes establecerlo en info o debug para más detalles.
+
+**Ejemplo:**
+```bash
+version: '3.8'
+services:
+  headscale:
+    image: headscale/headscale:latest
+    container_name: headscale
+    restart: unless-stopped
+    volumes:
+      - ./config:/etc/headscale
+    ports:
+      - "8080:8080"
+    command: headscale serve
+```
+
 ## 4. Se reinicia Headscale para aplicar los cambios
 ```bash
 sudo systemctl restart headscale
