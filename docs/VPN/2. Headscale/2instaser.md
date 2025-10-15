@@ -50,7 +50,7 @@ sudo headscale users create miusuario
 sudo headscale preauthkeys create --reusable --expiration 24h --user miusuario
 ```
 O sin expirar:
-```bash
+```bash.
 headscale preauthkeys create --user mi usuario
 ```
 
@@ -68,6 +68,7 @@ Para confirmar su correcta configuración en el servidor
 sudo headscale nodes list
 ```
 Deben de aparecer los dispositivos
+
 Para confirmar su correcta configuración en el cliente
 
 ```Bash
