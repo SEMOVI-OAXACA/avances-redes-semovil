@@ -91,7 +91,7 @@ Para confirmar su correcta configuración en el cliente
 tailscale status
 ```
 
-## 8. Tomar en cuenta
+## Tomar en cuenta
 Dependiendo de la configuración, hay que habilitar los puertos correspondientes
 Ejemplo:
 ```Bash
