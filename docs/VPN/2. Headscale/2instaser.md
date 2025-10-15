@@ -28,15 +28,15 @@ sudo systemctl status headscale
 ## 3. Configuración 
 Crear archivo de configuración 
 ```Bash
-sudo cp config-example.yaml /etc/headscale/config.yaml
+sudo nano /etc/headscale/config.yaml
 ```
 Aquí se pueden ajustar algunas configuraciones:
 
-**server_url:** Se establecela URL pública del servidor Headscale. Debe comenzar con https:// (recomendado) o http://. Por ejemplo: `https://headscale.tudominio.com:443`. Si no se tiene un dominio, se puede configurar con la ip pública. (Para saber cual es, con ``curl ifconfig.me``)
-**listen_addr:** La dirección en la que Headscale escuchará. Generalmente 0.0.0.0:8080.
-**ip_prefixes:** Puedes dejar los valores predeterminados.
-**dns_config:** Configura servidores DNS para tus clientes.
-**log_level:** Puedes establecerlo en info o debug para más detalles.
+- **server_url:** Se establecela URL pública del servidor Headscale. Debe comenzar con https:// (recomendado) o http://. Por ejemplo: `https://headscale.tudominio.com:443`. Si no se tiene un dominio, se puede configurar con la ip pública. (Para saber cual es, con ``hostname -I`` o tambien ``ip a`` )
+- **listen_addr:** La dirección en la que Headscale escuchará. Generalmente 0.0.0.0:8080.
+- **ip_prefixes:** Puedes dejar los valores predeterminados.
+- **dns_config:** Configura servidores DNS para tus clientes.
+- **log_level:** Puedes establecerlo en info o debug para más detalles.
 ## 4. Se reinicia Headscale para aplicar los cambios
 ```bash
 sudo systemctl restart headscale
@@ -49,6 +49,11 @@ sudo headscale users create miusuario
 ```bash
 sudo headscale preauthkeys create --reusable --expiration 24h --user miusuario
 ```
+O sin expirar:
+```bash
+headscale preauthkeys create --user mi usuario
+```
+
 ## 7. Conecta tus clientes:
 Al conectar un nuevo dispositivo, el comando tailscale up cambiará para apuntar a tu IP:
 ```Bash
@@ -71,3 +76,8 @@ tailscale status
 
 ## 8. Tomar en cuenta
 Dependiendo de la configuración, hay que habilitar los puertos correspondientes
+Ejemplo:
+```Bash
+sudo ufw allow 8080/tcp
+sudo ufw reload
+```
