@@ -95,12 +95,6 @@ const config = {
             position: 'left',
             label: 'Documentación',
           },
-          //{to: '/blog', label: 'Blog', position: 'left'},
-          //{
-           // href: 'https://github.com/facebook/docusaurus',
-           // label: 'GitHub',
-           // position: 'right',
-          //},
         ],
       },
       footer: {
@@ -139,19 +133,6 @@ const config = {
                 href: 'https://www.facebook.com/SEMOVIGobOax',
               },
             ],
-          },
-          {
-           //title: 'More',
-          //  items: [
-           //   {
-              //  label: 'Blog',
-             //   to: '/blog',
-            //  },
-            //  {
-             //   label: 'GitHub',
-           //     href: 'https://github.com/facebook/docusaurus',
-           //   },
-         //   ],
           },
         ],
         copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,

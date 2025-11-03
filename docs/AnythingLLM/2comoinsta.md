@@ -1,4 +1,4 @@
-### **Asunto:** Plantilla de Despliegue: AnythingLLM con Proxy Inverso Traefik en AWS
+# AnythingLLM con Proxy Inverso Traefik en AWS
 
 ---
 
@@ -29,7 +29,7 @@ Se instalaron los componentes necesarios para la orquestación de contenedores:
 ### 4. Configuración de Traefik (traefik.yml)
 
 Se definió un archivo de configuración estática para Traefik, instruyéndole:
-* Definir los puntos de entrada (EntryPoints) `http` (puerto 80) y `httpss` (puerto 443).
+* Definir los puntos de entrada (EntryPoints) `http` (puerto 80) y `https` (puerto 443).
 * Implementar una redirección global permanente de HTTP a HTTPS.
 * Habilitar el proveedor Docker para la detección automática de contenedores.
 * Configurar el *resolver* de certificados `letsencrypt` (ACME), especificando el email de contacto y la ruta de almacenamiento `acme.json`.
@@ -171,3 +171,8 @@ Verificación: Se monitorearon los registros de Traefik, confirmando la correcta
 
 ### 7. Personalización (Branding):
 Se accedió al panel de administración de AnythingLLM y se personalizó la apariencia (ej. favicon), utilizando una URL pública directa a un archivo de imagen.
+
+### 8. Notas
+Para una correcta integración de la información en AnythingLLM, es importante segmentar los datos grandes, con el fin de facilitar su procesamiento. Además, es necesario establecer límites adecuados para los fragmentos de contexto, lo que permitirá que el modelo genere respuestas más completas y precisas.
+
+Si se desea evitar que el modelo utilice su conocimiento básico o preentrenado, se debe activar la opción "Consulta" en lugar de "Chat". Esto asegura que el modelo solo procese la información proporcionada sin recurrir a su base de datos interna.
